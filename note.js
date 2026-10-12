@@ -5,7 +5,7 @@ function renderNote(){
  document.title=note.title+' · Cosmos';$('#note-title').textContent=note.title;$('#note-kind').textContent=note.category==='论文阅读'?'PAPER NOTE':'PERSONAL NOTE';$('#note-summary').textContent=note.excerpt||'';$('#note-meta').textContent=`${note.date} · ${note.category} · 约 ${Math.max(1,Math.ceil(note.body.length/400))} 分钟阅读`;$('#note-tags').innerHTML=`<span class="tag">${esc(note.tag||note.category)}</span>`;
  const headings=[];let out='',paragraph=[],listType='',code=null;
  const flush=()=>{if(paragraph.length){out+='<p>'+paragraph.map(inline).join('<br>')+'</p>';paragraph=[]}if(listType){out+=`</${listType}>`;listType=''}};
- for(const line of note.body.split(/\r?\n/)){
+ for(const line of (note.category==='论文阅读'?paperBody(note.body):note.body).split(/\r?\n/)){
   if(line.trim().startsWith('```')){flush();if(code===null)code=[];else{out+='<pre><code>'+esc(code.join('\n'))+'</code></pre>';code=null}continue}
   if(code!==null){code.push(line);continue}
   const heading=line.match(/^(#{1,3})\s+(.+)$/)||line.match(/^([一二三四五六七八九十]+、)(.+)$/)||line.match(/^(\d{2}\s+)(.+)$/);
@@ -18,7 +18,7 @@ function renderNote(){
  if(observer)observer.disconnect();if('IntersectionObserver' in window){observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){$('#toc').querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.hash==='#'+entry.target.id))}},{rootMargin:'-5% 0px -65% 0px'});headings.forEach(h=>observer.observe(document.getElementById(h.id)))}
 }
 if(safeRead('cosmos-theme')==='dark')document.body.classList.add('dark');$('#theme').onclick=()=>{document.body.classList.toggle('dark');try{localStorage.setItem('cosmos-theme',document.body.classList.contains('dark')?'dark':'light')}catch{}};
-$('#edit-note').onclick=()=>{const f=$('#edit-form');f.elements.title.value=note.title;f.elements.body.value=note.body;$('#edit-dialog').showModal()};$('.close').onclick=()=>$('#edit-dialog').close();
-$('#edit-form').onsubmit=e=>{e.preventDefault();const f=e.target,title=f.elements.title.value.trim(),body=f.elements.body.value.trim();if(!title||!body)return;const updated={...note,title,body,excerpt:body.replace(/^#+\s*/gm,'').slice(0,110)};const updatedNotes=notes.map(n=>n.id===note.id?updated:n);try{localStorage.setItem(KEY,JSON.stringify(updatedNotes));notes=updatedNotes;note=updated;renderNote();$('#edit-dialog').close()}catch{$('#edit-message').textContent='存储失败，编辑内容已保留在这里，请复制备份。'}};
+$('#edit-note').onclick=()=>{const f=$('#edit-form');f.elements.title.value=note.title;f.elements.body.value=note.category==='论文阅读'?paperBody(note.body):note.body;f.elements.body.required=note.category!=='论文阅读';$('#edit-dialog').showModal()};$('.close').onclick=()=>$('#edit-dialog').close();
+$('#edit-form').onsubmit=e=>{e.preventDefault();const f=e.target,title=f.elements.title.value.trim(),body=note.category==='论文阅读'?paperBody(f.elements.body.value):f.elements.body.value.trim();if(!title||!body)return;const updated={...note,title,body,excerpt:body.replace(/^#+\s*/gm,'').slice(0,110)};const updatedNotes=notes.map(n=>n.id===note.id?updated:n);try{localStorage.setItem(KEY,JSON.stringify(updatedNotes));notes=updatedNotes;note=updated;renderNote();$('#edit-dialog').close()}catch{$('#edit-message').textContent='存储失败，编辑内容已保留在这里，请复制备份。'}};
 $('#delete-note').onclick=()=>{if(!confirm('删除当前浏览器中的这篇笔记？此操作不会修改 GitHub 上的文章。'))return;try{localStorage.setItem(KEY,JSON.stringify(notes.filter(n=>n.id!==note.id)));location.href='index.html#main'}catch{alert('本机存储不可用，未删除笔记。')}};
 renderNote();
