@@ -21,3 +21,25 @@ form label,form input,form textarea,form select{font-size:16px}
 .profile-logo{display:block;width:103px;height:81px;object-fit:contain;margin:0 0 22px;border-radius:6px}
 @media(max-width:850px){.toolbar{flex-wrap:wrap}.tabs{gap:18px}.links{gap:20px}}
 @media(max-width:620px){.links{gap:11px}.links>a{font-size:14px}.brand{gap:6px;font-size:23px}.brand-logo{width:41px;height:33px}.links .write{font-size:0}.tabs{gap:20px}.search input{width:100%}.intro{font-size:16px}.post p{font-size:16px}#read-body{font-size:17px}.hero-copy{padding-top:28px}footer{flex-direction:column;align-items:flex-start}}
+/* Full-page note reading. */
+.note-hero{height:auto;min-height:360px;padding-bottom:38px}
+.note-hero .sky{opacity:.45;pointer-events:none}
+.note-hero .planet{width:170px;height:170px;top:110px}
+.note-heading{position:relative;z-index:1}
+.note-heading h1{font-family:Arial,"Microsoft YaHei",sans-serif;font-size:clamp(28px,3.2vw,40px);line-height:1.4;font-weight:600;letter-spacing:0;max-width:920px;margin:20px 0 12px;overflow-wrap:anywhere}
+.note-heading #note-summary{font-size:17px;max-width:850px;color:#bdccc3;line-height:1.9}
+.note-heading #note-meta{font-size:13px;color:#bdccc3;margin-top:20px}
+.note-layout{display:grid;grid-template-columns:minmax(0,1fr) 235px;gap:70px;padding-top:32px;padding-bottom:70px}
+.note-actions{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--line);font-size:14px;color:var(--green)}
+.article-body{font-size:18px;line-height:1.95;overflow-wrap:anywhere;min-height:230px}
+.article-body h2{font-size:25px;line-height:1.5;margin:38px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+.article-body h3{font-size:21px;line-height:1.6;margin:30px 0 14px;scroll-margin-top:24px}
+.article-body p{margin:20px 0}.article-body li{margin:10px 0}.article-body ul,.article-body ol{padding-left:28px}
+.article-body li::marker{color:var(--muted)}
+.article-body pre{background:var(--soft);padding:18px;border-radius:5px;overflow:auto;white-space:pre;font-size:15px}
+.article-body :not(pre)>code{background:var(--soft);padding:2px 5px;border-radius:3px;font-size:.9em}
+.note-sidebar{padding-top:5px}.toc-sticky{position:sticky;top:30px}.note-sidebar h2{font-size:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:16px;margin:0 0 18px}.note-sidebar h2 span{font-size:9px;letter-spacing:1px;color:var(--muted)}
+#toc{border-left:1px solid var(--line);margin-bottom:34px}#toc a{display:block;padding:8px 0 8px 18px;font-size:14px;line-height:1.7;color:var(--muted);border-left:2px solid transparent;margin-left:-1px}#toc a:hover,#toc a.active{color:var(--green);border-left-color:var(--green)}#toc .toc-child{padding-left:30px;font-size:13px}
+.note-end{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:44px;padding-top:20px;font-size:14px;color:var(--green)}
+@media(max-width:850px){.note-layout{gap:30px;grid-template-columns:minmax(0,1fr) 190px}.article-body{font-size:17px}}
+@media(max-width:620px){.note-layout{display:flex;flex-direction:column;gap:18px}.note-sidebar{order:-1;margin-top:0}.toc-sticky{position:static}.note-sidebar .side-block{display:none}#toc{display:flex;flex-wrap:wrap;border:0;gap:5px;margin-bottom:10px}#toc a{border:1px solid var(--line);border-radius:4px;padding:5px 10px;font-size:13px;margin:0}#toc .toc-child{padding-left:10px}.note-hero{min-height:330px}.note-heading h1{font-size:28px}.article-body h2{font-size:23px}.article-body h3{font-size:20px}.note-heading #note-summary{font-size:16px}.note-sidebar h2{margin-bottom:12px}.note-actions{padding-top:10px}}
