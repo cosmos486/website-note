@@ -31,3 +31,8 @@
 建议仓库名 cosmos-blog，设为 Public。将本目录中的文件提交到 main 分支，在仓库 Settings → Pages 中选择 Deploy from a branch、main、/(root)，保存后等待发布。
 
 公开源码与公开网站是独立设置。此前的 Sites 预览仍保持私人访问。
+
+## GitHub 自动同步
+新增和编辑时先保存在浏览器，再上传到 `data/notes.json`。网站打开时读取 GitHub 的公开笔记，支持不同设备。首次使用点击“连接 GitHub”，在 GitHub 创建只允许 `cosmos486/website-note` 仓库 Contents 读写的 fine-grained token，粘贴在网站的密码输入框。令牌仅保存在标签页 sessionStorage，不会提交到仓库；关闭会话后需重新连接。已有笔记可通过“上传本机已有笔记”加入队列。仓库公开，上传的笔记也公开。
+
+未连接或网络错误时保留本机待上传队列，连接后、恢复网络后可重试。同一篇笔记发生云端冲突时停止上传，保留本机内容，请导出备份后与云端对照。不同文章更新会合并，并通过 GitHub 文件 SHA 防止并发覆盖。当前单文件总容量约 900 KB；超出会提示导出备份。删除按钮仍仅删除本机副本，不删除 GitHub 文件。导入备份后请点击上传已有笔记。
